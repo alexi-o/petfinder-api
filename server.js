@@ -1,6 +1,14 @@
 var express = require('express'),
     app = express();
 
+var state = "CO";
+var city = "Denver";
+var animal = "dog";
+
+const api = require('./env.js');
+
+var link = "http://api.petfinder.com/pet.find?key=" +api + "&animal=" +animal +"&location="+city + "+" +state +"&output=basic"
+
 // Routes
 
 
