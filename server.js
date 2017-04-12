@@ -7,14 +7,16 @@ var animal = "dog";
 
 const api = require('./env.js');
 
+app.use(express.static('public'));
+
 var link = "http://api.petfinder.com/pet.find?key=" +api + "&animal=" +animal +"&location="+city + "+" +state +"&output=basic"
 
 // Routes
 
 
 // Endpoints
-app.get('/', function homepage(req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+app.get('/', function (req, res) {
+  res.sendFile('views/index.html' , { root : __dirname});
 });
 
 
