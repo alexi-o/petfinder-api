@@ -17,10 +17,11 @@ function renderDog(dog) {
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
   "              <!-- begin dog internal row -->" +
-  "                <div class='row'>" +
+  "                <div class='column'>" +
   "                  <div class='col-md-3 col-xs-12 thumbnail dog-art'>" +
   "                     <img src='" + dog.media.photos.photo[3].$t +  " alt='dog image'>" +
   "                  </div>" +
+
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
@@ -38,6 +39,10 @@ function renderDog(dog) {
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Description:</h4>" +
   "                        <span class='dog-description'>" + dog.description.$t + "</span>" +
+  "                      </li>" +
+    "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'>Contact:</h4>" +
+  "                        <span class='dog-description'>" + "Phone: " + dog.contact.phone.$t + ", Email: " + dog.contact.email.$t + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
