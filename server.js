@@ -4,6 +4,9 @@ var express = require('express'),
 var bodyParser = require('body-parser');
 var requestProxy = require('express-request-proxy');
 var http = require("http");
+var request = require('request');
+var petfinder = require('petfinder')(url, 'api_secret');
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -28,11 +31,9 @@ app.get('/', function (req, res) {
 });
 
 app.get('/api/dogs', function(req,res) {
-	console.log(url);
-    var request = require('request');
 		request(url, function(error, response, dogs) {
 		var parsedDogs = JSON.parse(dogs);
-		res.send(parsedDogs.petfinder.pets);
+		res.send(parsedDogs.petfinder.pets.pet);
 	});
 });
 
