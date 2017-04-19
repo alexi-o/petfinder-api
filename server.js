@@ -44,7 +44,7 @@ var animal = "dog";
  ************/
 var db = require('./models');
 var api = require('./env.js');
-var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"&location="+city + "+" +state +"&output=basic&format=json";
+var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"&location="+state +"&output=basic&count=50&format=json";
 
 /**********
  * ENDPOINTS *
@@ -54,10 +54,20 @@ var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"
 	// });
 
 app.get('/api/dogs', function(req,res) {
+		var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"&location="+state +"&output=basic&count=50&format=json";
 		request(url, function(error, response, dogs) {
 		var parsedDogs = JSON.parse(dogs);
 		res.send(parsedDogs.petfinder.pets.pet);
 	});
+});
+
+app.get('/api/dogs/:id', function(req,res) {
+		var id = req.params.id;
+		var url = "http://api.petfinder.com/pet.get?key=" + api + "&id=" +id +"&output=basic&format=json";
+		request(url, function(error,response,dog) {
+		var parsedDog = JSON.parse(dog);
+		res.send(parsedDog);
+		});
 });
 
 

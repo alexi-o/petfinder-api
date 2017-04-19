@@ -28,6 +28,19 @@ var dogs = [
 }	
 ];
 
+var secondOptions = [
+{
+     option: "Age",
+     choices: { 1: "Baby", 2: "Young", 3: "Adult" },
+},
+{
+     option: "Size",
+     choices: { 1: "S", 2: "M", 3: "L", 4: "XL" },
+}
+];
+
+ 
+
 db.Dog.create(dogs, function(err, dogs){
 	if (err) { 
 	return console.log('err', err); 

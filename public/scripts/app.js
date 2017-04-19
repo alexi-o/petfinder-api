@@ -5,6 +5,20 @@ $(document).ready(function() {
         renderDog(dog);
         console.log("Render");
     });
+        $('#learn-more').on('click', function(e){
+          e.preventDefault();
+          console.log("Learn more clicked!");
+    });
+        $('#hate-dog').on('click', function(e){
+          e.preventDefault();
+          console.log("Hate dog clicked!");
+    });
+        $('#love-dog').on('click', function(e){
+          e.preventDefault();
+          console.log("Love dog clicked!");
+          var dogId = $('#love-dog').val('data-dog-id');
+          console.log(dogId);
+    });
   });    
 });
 
@@ -12,7 +26,7 @@ function renderDog(dog) {
   console.log('rendering dog:', dog);
   var dogHtml =
   "        <!-- one dog -->" +
-  "        <div class='row dog' data-dog-id='" + dog.id + "'>" +
+  "        <div class='row dog' data-dog-id='" + dog.id.$t + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
@@ -44,16 +58,25 @@ function renderDog(dog) {
   "                        <h4 class='inline-header'>Contact:</h4>" +
   "                        <span class='dog-description'>" + "Phone: " + dog.contact.phone.$t + ", Email: " + dog.contact.email.$t + "</span>" +
   "                      </li>" +
+    "                      </li>" +
+    "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'>Location:</h4>" +
+  "                        <span class='dog-description'>" + dog.contact.address1.$t + ", " + dog.contact.city.$t + ", " + dog.contact.state.$t + ", " + dog.contact.zip.$t + "</span>" +
+  "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
   "                <!-- end of dog internal row -->" +
-
+  "                 <div class='panel-footer'>" +
+  "                   <button class='btn btn-primary learn-more' id='learn-more'>Learn More</button>" +
+  "                     </div>" + 
+  "                   <button class='btn btn-danger pull-right' id='hate-dog'>Hate This Dog!</button>" +
+    "                   <button class='btn btn-success love-dog pull-right' id='love-dog'>Love This Dog!</button>" +
+  "                </div>" +
   "              </div>" +
   "            </div>" +
   "          </div>" +
   "          <!-- end one dog -->";
-
 
 $("#dogStuff").append(dogHtml);
 }
