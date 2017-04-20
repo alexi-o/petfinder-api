@@ -1,3 +1,11 @@
-a {
+li {
 	list-style: none;
+}
+
+.jumbotron{
+	background: url(./images/header.jpg) no-repeat;
+}
+
+h1, h2{
+	color: white;
 }
