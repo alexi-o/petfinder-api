@@ -1,14 +1,22 @@
 var express = require('express'),
     app = express();
 
-var bodyParser   = require('body-parser');
-var request		 = require('request');
-var mongoose     = require('mongoose');
-var passport     = require('passport');
-var flash        = require('connect-flash');
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var session      = require('express-session');
+var api = require('./env.js');
+var api2 = require('./env2.js');
+var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"&location="+state +"&output=basic&count=5&format=json";
+
+
+var bodyParser   	 = require('body-parser');
+var request		 	 = require('request');
+var mongoose     	 = require('mongoose');
+var passport     	 = require('passport');
+var flash        	 = require('connect-flash');
+var morgan       	 = require('morgan');
+var cookieParser 	 = require('cookie-parser');
+var session      	 = require('express-session');
+var googleMapsClient = require('@google/maps').createClient({
+  key: api2
+});
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -43,9 +51,6 @@ var animal = "dog";
  * DATABASE *
  ************/
 var db = require('./models');
-var api = require('./env.js');
-var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"&location="+state +"&output=basic&count=50&format=json";
-
 /**********
  * ENDPOINTS *
  **********/
@@ -54,7 +59,7 @@ var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"
 	// });
 
 app.get('/api/dogs', function(req,res) {
-		var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"&location="+state +"&output=basic&count=50&format=json";
+		var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"&location="+state +"&output=basic&count=5&format=json";
 		request(url, function(error, response, dogs) {
 		var parsedDogs = JSON.parse(dogs);
 		res.send(parsedDogs.petfinder.pets.pet);

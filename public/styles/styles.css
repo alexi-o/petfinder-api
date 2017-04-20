@@ -9,3 +9,8 @@ li {
 h1, h2{
 	color: white;
 }
+
+#map {
+	height: 200px;
+	width: 200px;
+}

@@ -2,12 +2,18 @@ $(document).ready(function() {
   console.log('app.js loaded!');
   $.get('/api/dogs', function(dogs) {
         dogs.forEach(function(dog){
-        renderDog(dog);
+        renderDog(dog);       
         console.log("Render");
     });
         $('#learn-more').on('click', function(e){
           e.preventDefault();
           console.log("Learn more clicked!");
+          var dogId = $(this).attr('id');
+          console.log(dogID);
+          // $.get('/api/dogs/:id', function(dog){
+          //   renderDog(dog);
+          //   console.log("Rendered " + id);
+          // });
     });
         $('#hate-dog').on('click', function(e){
           e.preventDefault();
@@ -16,14 +22,14 @@ $(document).ready(function() {
         $('#love-dog').on('click', function(e){
           e.preventDefault();
           console.log("Love dog clicked!");
-          var dogId = $('#love-dog').val('data-dog-id');
+          var dogId = $(this).attr('id');
           console.log(dogId);
     });
   });    
 });
 
 function renderDog(dog) {
-  console.log('rendering dog:', dog);
+  console.log('rendering dog:', dog + " " +dog.id.$t);
   var dogHtml =
   "        <!-- one dog -->" +
   "        <div class='row dog' data-dog-id='" + dog.id.$t + "'>" +
@@ -35,7 +41,6 @@ function renderDog(dog) {
   "                  <div class='col-md-3 col-xs-12 thumbnail dog-art'>" +
   "                     <img src='" + dog.media.photos.photo[3].$t +  " alt='dog image'>" +
   "                  </div>" +
-
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
@@ -68,10 +73,10 @@ function renderDog(dog) {
   "                </div>" +
   "                <!-- end of dog internal row -->" +
   "                 <div class='panel-footer'>" +
-  "                   <button class='btn btn-primary learn-more' id='learn-more'>Learn More</button>" +
+  "                   <button class='btn btn-primary learn-more' id=' " + dog.id.$t + "'>Learn More</button>" +
+    "                   <button class='btn btn-danger pull-right' id=' " + dog.id.$t + "'>Hate This Dog!</button>" +
+    "                   <button class='btn btn-success love-dog pull-right' id=' " + dog.id.$t + "''>Love This Dog!</button>" +
   "                     </div>" + 
-  "                   <button class='btn btn-danger pull-right' id='hate-dog'>Hate This Dog!</button>" +
-    "                   <button class='btn btn-success love-dog pull-right' id='love-dog'>Love This Dog!</button>" +
   "                </div>" +
   "              </div>" +
   "            </div>" +
@@ -79,4 +84,5 @@ function renderDog(dog) {
   "          <!-- end one dog -->";
 
 $("#dogStuff").append(dogHtml);
+
 }

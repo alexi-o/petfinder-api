@@ -12,6 +12,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- APPLICATION SCRIPTS -->
     <script src="./scripts/app.js"></script>
+    <script src="./scripts/map.js"></script>
   </head>
   <body>
     <div class="jumbotron">
@@ -33,7 +34,10 @@
           <h2>Doggos Near You</h2>
         </div>
       </div>
-      <div id='dogStuff' class ="row album" attr="dog._id">
+      <div class="container">
+      <div id='dogStuff' class ="col-md-9" attr="dog._id">
       </div>
+       <div id="map" class ="col-md-3"></div>
+       </div>
     </section>
 
