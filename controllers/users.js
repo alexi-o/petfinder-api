@@ -1,5 +1,16 @@
 var passport = require("passport")
 
+// var api = require('../env.js');
+// var api2 = require('../env2.js');
+
+// function getDogs(request, response) {
+// 		var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&location=colorado&output=basic&count=5&format=json";
+// 		request(url, function(error, response, dogs) {
+// 		var parsedDogs = JSON.parse(dogs);
+// 		res.send(parsedDogs.petfinder.pets.pet);
+// 	});
+// }
+
 // GET /signup
 function getSignup(request, response) {
 	response.render('signup.ejs', 
@@ -46,6 +57,7 @@ function secret(request, response){
 }
 
 module.exports = {
+  // getDogs: getDogs,	
   getLogin: getLogin,
   postLogin: postLogin ,
   getSignup: getSignup,

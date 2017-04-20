@@ -4,32 +4,45 @@ $(document).ready(function() {
         dogs.forEach(function(dog){
         renderDog(dog);       
         console.log("Render");
+
     });
-        $('#learn-more').on('click', function(e){
+        $('#button-search').on('click', function(e){
           e.preventDefault();
-          console.log("Learn more clicked!");
-          var dogId = $(this).attr('id');
-          console.log(dogID);
-          // $.get('/api/dogs/:id', function(dog){
-          //   renderDog(dog);
-          //   console.log("Rendered " + id);
-          // });
+          console.log("Learn more clickedd!");
+          var search = $('#search').val();
+          console.log(search);
+          $.ajax({
+            method: 'GET',
+            url: '/api/dogs/'+ search,
+            data: search,
+            success:[function(dogs){
+            $("#dogStuff").remove('.row dog');
+            console.log(dogs);
+              dogs.forEach(function(dog){
+                renderDog(dog);
+                console.log("Rendering new dogs");
+            });
+          }],
+       }); 
     });
-        $('#hate-dog').on('click', function(e){
+
+        $('.hate-dog').on('click', function(e){
           e.preventDefault();
           console.log("Hate dog clicked!");
+          // var dogId = $(this).attr('id');
+          // console.log(dogId);
     });
-        $('#love-dog').on('click', function(e){
+        $('.love-dog').on('click', function(e){
           e.preventDefault();
           console.log("Love dog clicked!");
-          var dogId = $(this).attr('id');
-          console.log(dogId);
+          // var dogId = $(this).attr('id');
+          // console.log(dogId);
+    });  
     });
-  });    
 });
 
 function renderDog(dog) {
-  console.log('rendering dog:', dog + " " +dog.id.$t);
+  console.log('rendering dog:', dog + " " + dog.id.$t);
   var dogHtml =
   "        <!-- one dog -->" +
   "        <div class='row dog' data-dog-id='" + dog.id.$t + "'>" +
@@ -56,8 +69,8 @@ function renderDog(dog) {
   "                        <span class='dog-size'>" + dog.size.$t + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Description:</h4>" +
-  "                        <span class='dog-description'>" + dog.description.$t + "</span>" +
+  "                        <h4 class='inline-header'>Breed:</h4>" +
+  "                        <span class='dog-description'>" + dog.breeds.breed.$t + "</span>" +
   "                      </li>" +
     "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Contact:</h4>" +
@@ -73,9 +86,9 @@ function renderDog(dog) {
   "                </div>" +
   "                <!-- end of dog internal row -->" +
   "                 <div class='panel-footer'>" +
-  "                   <button class='btn btn-primary learn-more' id=' " + dog.id.$t + "'>Learn More</button>" +
-    "                   <button class='btn btn-danger pull-right' id=' " + dog.id.$t + "'>Hate This Dog!</button>" +
-    "                   <button class='btn btn-success love-dog pull-right' id=' " + dog.id.$t + "''>Love This Dog!</button>" +
+  "                   <button class='btn btn-primary map-dog' id='" + dog.id.$t + "'>Map Me!</button>" +
+    "                   <button class='btn btn-danger pull-right hate-dog' id=' " + dog.id.$t + "'>Hate This Dog!</button>" +
+    "                   <button class='btn btn-success pull-right love-dog' id=' " + dog.id.$t + "''>Love This Dog!</button>" +
   "                     </div>" + 
   "                </div>" +
   "              </div>" +
@@ -83,6 +96,6 @@ function renderDog(dog) {
   "          </div>" +
   "          <!-- end one dog -->";
 
-$("#dogStuff").append(dogHtml);
+$("#dogStuff").prepend(dogHtml);
 
 }

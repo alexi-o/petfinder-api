@@ -14,3 +14,9 @@ h1, h2{
 	height: 200px;
 	width: 200px;
 }
+
+.sticky {
+     position: fixed;
+     top: 0;
+  }
+

@@ -3,7 +3,7 @@ var express = require('express'),
 
 var api = require('./env.js');
 var api2 = require('./env2.js');
-var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"&location="+state +"&output=basic&count=5&format=json";
+var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&location=colorado&output=basic&count=5&format=json";
 
 
 var bodyParser   	 = require('body-parser');
@@ -43,10 +43,6 @@ app.use(function (req, res, next) {
 var routes = require('./config/routes');
 app.use(routes);
 
-var state = "CO";
-var city = "Denver";
-var animal = "dog";
-
 /************
  * DATABASE *
  ************/
@@ -54,24 +50,37 @@ var db = require('./models');
 /**********
  * ENDPOINTS *
  **********/
-	// app.get('/', function (req, res) {
-	//   res.sendFile('views/index.html' , { root : __dirname});
-	// });
 
 app.get('/api/dogs', function(req,res) {
-		var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=" +animal +"&location="+state +"&output=basic&count=5&format=json";
+		var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&location=colorado&output=basic&count=5&format=json";
 		request(url, function(error, response, dogs) {
 		var parsedDogs = JSON.parse(dogs);
 		res.send(parsedDogs.petfinder.pets.pet);
 	});
 });
 
+app.get('/api/dogs/:search', function(req, res) {
+		console.log("This is the request: " + req.params.search);
+		var location = req.params.search;
+		console.log("Location: " + location);
+		var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&location="+location+"+CO" +"&output=basic&count=5&format=json";
+		console.log(url);
+		request(url, function(error, response, dogs) {
+			var parsedDogs = JSON.parse(dogs);
+			console.log(parsedDogs.petfinder.pets.pet);
+			res.send(parsedDogs.petfinder.pets.pet);
+	});	
+});
+
 app.get('/api/dogs/:id', function(req,res) {
 		var id = req.params.id;
+		console.log("this id: " +id);
 		var url = "http://api.petfinder.com/pet.get?key=" + api + "&id=" +id +"&output=basic&format=json";
+		console.log(url);
 		request(url, function(error,response,dog) {
-		var parsedDog = JSON.parse(dog);
-		res.send(parsedDog);
+			var parsedDog = JSON.parse(dog);
+			console.log(parsedDog);
+			res.send(parsedDog.petfinder.pet);
 		});
 });
 
