@@ -86,7 +86,7 @@ app.get('api/dogs/search/:size/', function(req,res){
 	});	
 });
 
-app.get('api/dogs/:age', function(req,res){
+app.get('api/dogs/search/:age', function(req,res){
 	console.log("This is the age request: " + req.params.age);
 	var age = req.params.age;
 	console.log("Age: " + age);
@@ -109,9 +109,16 @@ app.get('/api/dogs/:id', function(req,res) {
 		});
 });
 
-app.delete('/api/dogs/:id', function(req, res) {
-	var id = req.params.id;
-	console.log("deleting this dog: " +id);
+app.post('/api/haters', function(req,res) {
+		var dogSave = req.body;
+		// console.log(dogSave);
+		console.log(req);
+		// db.User.findById({_id: req.user._id });
+});
+
+app.post('/api/lovers', function(req,res) {
+		var dogSave = req.body;
+		console.log(dogSave);
 });
 
 

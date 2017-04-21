@@ -22,3 +22,15 @@ li {
 	width: 100px;
 }
 
+.jumbotron h1, h2 {
+	color: white;
+}
+
+li {
+	display: inline;
+}
+
+h2.no-login {
+	margin-left: 150px;
+	color: black;
+}

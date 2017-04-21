@@ -35,16 +35,20 @@ $(document).ready(function() {
             console.log("Hate dog clicked!");
             var dogId = $(this).attr('value');
             console.log(dogId);
-              $.ajax({
-                method: 'DELETE',
-                url: '/api/dogs/'+dogId,
-                data: dogId,
-                success: [function(dog){
-                  pageDogs.pop(dog);
-                  console.log(pageDogs);
-          }],
-       }); 
-    });
+              for(var i = 0; i<pageDogs.length; i++){
+                console.log("Checking....");
+                console.log(pageDogs[i].id.$t);
+                if (pageDogs[i].id.$t === dogId){
+                  console.log("Hate match!");
+                  loveDogs.push(pageDogs[i]);
+                  $.ajax({
+                    method: 'POST',
+                    url: '/api/haters',
+                    data: pageDogs[i]
+                  });
+                } 
+              }
+    }); 
         $('.love-dog').on('click', function(e){
             e.preventDefault();
             console.log("Love dog clicked!");
@@ -54,8 +58,13 @@ $(document).ready(function() {
                 console.log("Checking....");
                 console.log(pageDogs[i].id.$t);
                 if (pageDogs[i].id.$t === dogId){
-                  console.log("Match!");
+                  console.log("Love match!");
                   loveDogs.push(pageDogs[i]);
+                  $.ajax({
+                    method: 'POST',
+                    url: '/api/lovers',
+                    data: pageDogs[i]
+                  });
                 } 
               }
     });    
@@ -81,7 +90,10 @@ $(document).ready(function() {
               $.ajax({
                 method: 'GET',
                 url: '/api/dogs/search/'+ age,
-                data: age,
+                data: {
+                  age: age,
+                  UserID: UserID
+                },
                 success:[function(dogs){
                 console.log(dogs);
                   dogs.forEach(function(dog){
