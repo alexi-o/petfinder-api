@@ -39,8 +39,6 @@ var secondOptions = [
 }
 ];
 
- 
-
 db.Dog.create(dogs, function(err, dogs){
 	if (err) { 
 	return console.log('err', err); 

@@ -6,9 +6,6 @@ li {
 	background: url(./images/header.jpg) no-repeat;
 }
 
-h1, h2{
-	color: white;
-}
 
 #map {
 	height: 200px;
@@ -19,4 +16,9 @@ h1, h2{
      position: fixed;
      top: 0;
   }
+
+.selectpicker {
+	height: 34px;
+	width: 100px;
+}
 

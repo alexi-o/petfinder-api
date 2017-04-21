@@ -1,56 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Petfinder Api</title>
-    <!-- STYLESHEETS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./styles/styles.css">
-    <!-- VENDOR SCRIPTS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <!-- APPLICATION SCRIPTS -->
-    <script src="./scripts/app.js"></script>
-    <script src="./scripts/map.js"></script>
-
-  </head>
-  <body>
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Welcome to Colo-Doggo!</h1>
-        <h2>Your First Step Towards Your Next Dog</h2>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Petfinder Api</title>
+      <!-- STYLESHEETS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+      <link rel="stylesheet" href="./styles/styles.css">
+      <!-- VENDOR SCRIPTS -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+      <!-- APPLICATION SCRIPTS -->
+      <script src="./scripts/app.js"></script>
+      <script src="./scripts/map.js"></script>
+   </head>
+   <body>
+      <div class="jumbotron">
+         <div class="container">
+            <h1>Welcome to Colo-Doggo!</h1>
+            <h2>Your First Step Towards Your Next Dog</h2>
             <% if (currentUser) {%>
-          <li><a href="/logout">Logout <%= currentUser.local.email %></a></li>
-             <% } else { %>
-          <li><a href="/login">Login</a></li>
-          <li><a href="/signup">Signup</a></li> 
-              <% } %>
+            <li><a href="/logout">Logout <%= currentUser.local.email %></a></li>
+            <% } else { %>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Signup</a></li>
+            <% } %>
             </ul>
+         </div>
       </div>
-    </div>
-    <section class="container">
-      <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-          <h2>Doggos Near You</h2>
-              <div class="row">
-            <div class="col-lg-6">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="search" placeholder="Enter a city in Colorado">
-                    <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="button-search">Go!</button>
-      </span>
-    </div><!-- /input-group -->
-  </div><!-- /.col-lg-6 -->
-        </div>
-    </div>
-</div>
-        </div>
-      </div>
-      <div class="container">
-      <div id='dogStuff' class ="col-md-9" attr="dog._id">
-      </div>
-       <div id="map" class ="col-md-3"></div>
-       </div>
-    </section>
-
+       <% if (currentUser) {%>
+      <section class="container">
+         <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+               <h2>Doggos Near You</h2>
+               <div class="row">
+                  <div class="col-lg-6">
+                     <div class="input-group">
+                        <input type="text" class="form-control" id="search" placeholder="Enter a city in Colorado">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="button-search">Go!</button>
+                        </span>
+                     </div>
+                  </div>
+                  <select class="selectpicker dropup" id="selector">
+                     <optgroup label="Size">
+                        <option class="option">Small</option>
+                        <option class="option">Medium</option>
+                        <option class="option">Large</option>
+                        <option class="option">Extra Large</option>
+                     </optgroup>
+                     <optgroup label="Age">
+                        <option class="option">Baby</option>
+                        <option class="option">Young</option>
+                        <option class="option">Adult</option>
+                     </optgroup>
+                  </select>
+               </div>
+            </div>
+         </div>
+         </div>
+         </div>
+         <div class="container">
+            <div id='dogStuff' class ="col-md-9" attr="dog._id">
+            </div>
+            <div id="map" class ="col-md-3"></div>
+            <% } else { %>
+            <h2>Create an account to find dogs near you!</h2>
+            <% } %>
+         </div>
+      </section>

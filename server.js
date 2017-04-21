@@ -1,4 +1,4 @@
-var express = require('express'),
+	var express = require('express'),
     app = express();
 
 var api = require('./env.js');
@@ -54,8 +54,10 @@ var db = require('./models');
 app.get('/api/dogs', function(req,res) {
 		var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&location=colorado&output=basic&count=5&format=json";
 		request(url, function(error, response, dogs) {
-		var parsedDogs = JSON.parse(dogs);
-		res.send(parsedDogs.petfinder.pets.pet);
+			console.log(url);
+			var parsedDogs = JSON.parse(dogs);
+			console.log(parsedDogs.petfinder.pets.pet);
+			res.send(parsedDogs.petfinder.pets.pet);
 	});
 });
 
@@ -72,6 +74,29 @@ app.get('/api/dogs/:search', function(req, res) {
 	});	
 });
 
+app.get('api/dogs/search/:size/', function(req,res){
+	console.log("This is the size request: " + req.params.size);
+	var size = req.params.size;
+	console.log("Age: " + size);
+	var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&size=" +size + "&location=Denver+CO&output=basic&count=5&format=json";
+	request(url, function(error, response, dogs) {
+			console.log(url);
+			var parsedDogs = JSON.parse(dogs);
+			res.send(parsedDogs.petfinder.pets.pet);
+	});	
+});
+
+app.get('api/dogs/:age', function(req,res){
+	console.log("This is the age request: " + req.params.age);
+	var age = req.params.age;
+	console.log("Age: " + age);
+	var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&age=" +age + "&location=Denver+CO&output=basic&count=5&format=json";
+	request(url, function(error, response, dogs) {
+			var parsedDogs = JSON.parse(dogs);
+			res.send(parsedDogs.petfinder.pets.pet);
+	});
+});
+
 app.get('/api/dogs/:id', function(req,res) {
 		var id = req.params.id;
 		console.log("this id: " +id);
@@ -82,6 +107,11 @@ app.get('/api/dogs/:id', function(req,res) {
 			console.log(parsedDog);
 			res.send(parsedDog.petfinder.pet);
 		});
+});
+
+app.delete('/api/dogs/:id', function(req, res) {
+	var id = req.params.id;
+	console.log("deleting this dog: " +id);
 });
 
 
