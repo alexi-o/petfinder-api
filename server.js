@@ -55,8 +55,17 @@ var db = require('./models');
 app.get('/api/dogs', function allDogs(req, res){
 		db.Dog.find({}, function (err, data){
 			console.log(data);
+			console.log(req.user + "Love dogs");
 			res.send(data);
 	});
+});
+
+app.get('/api/dogs/:id', function(req,res) {
+		db.Dog.findByIdAndRemove({_id: req.params.id}, function(err, dogs){
+			if(err) res.json(err);
+			console.log("Removed " + req.params.id);
+			res.send(dogs);
+		});
 });
 
 app.delete('/api/dogs/:id', function(req,res) {
@@ -85,8 +94,9 @@ app.get('api/dogs/:age/', function(req, res){
 // 		console.log("This is the request: " + req.params.search);
 // 		var location = req.params.search;
 // 		console.log("Location: " + location);
-// 		var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&location="+location+"+CO" +"&output=basic&count=5&format=json";
 // 		console.log(url);
+// 		db.Dog.find({city: req.params.size}, function(err, data){
+
 // 		request(url, function(error, response, dogs) {
 // 			var parsedDogs = JSON.parse(dogs);
 // 			console.log(parsedDogs.petfinder.pets.pet);

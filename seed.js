@@ -51,7 +51,7 @@ request(url, function(error, response, body){
 			console.log('removed all dogs');
 		}
 	});
-		//create new records based on dress array
+		//create new records based on dog array
 		db.Dog.create(dogList, function(err, dogs){
 			if (err) { return console.log('err', err); }
 			console.log("created", dogList.length, "dogs");

@@ -15,6 +15,7 @@ $(document).ready(function() {
           e.preventDefault();
           console.log("Learn more clickedd!");
           var search = $('#search').val();
+          $("#dogStuff").empty();
           console.log(search);
           $.ajax({
             method: 'GET',
@@ -48,8 +49,7 @@ $(document).ready(function() {
                     console.log(data + "DONE DATA");
                     console.log("Removing " + dogHate);
                     $(dogHate).remove();
-                    }
-                    ]
+                    }]
                   });
                 } 
               }
@@ -73,15 +73,23 @@ $(document).ready(function() {
                 } 
               }
     });    
-        $('#map-dog').on('click', function(e){
+        $('.map-dog').on('click', function(e){
             e.preventDefault();
             console.log("Map dog clicked!");
             var dogId = $(this).attr('value');
             console.log(dogId);
               for(var i = 0; i<pageDogs.length; i++){
-                if (pageDogs[i].id === dogId){
+                if (pageDogs[i]._id === dogId){
                   console.log("Match!");
                   console.log(pageDogs[i]);
+                  $.ajax({
+                    method: 'GET',
+                    url: '/api/dogs/' + pageDogs[i]._id,
+                    data: pageDogs[i]._id,
+                    success: [function(data){
+                      console.log(data);
+                    }]
+                  });
                 }
               }
           });
@@ -151,7 +159,7 @@ function renderDog(dog) {
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Location:</h4>" +
-  "                        <span class='dog-description'>" + dog.contact.address1 + ", " + dog.contact.city + ", " + dog.contact.state + ", " + dog.contact.zip + "</span>" +
+  "                        <span class='dog-description'>" + dog.contact.address + ", " + dog.contact.city + ", " + dog.contact.state + ", " + dog.contact.zip + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +

@@ -1,10 +1,13 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var bcrypt   = require('bcrypt-nodejs');
+var Dog = require('./dogs.js');
 
 var User = mongoose.Schema({
   local : {
     email        : String,
     password     : String,
+    allDogs      : {type: Schema.Types, ref: "Dog"},
     hatedDogs	 : [ String ],
     lovedDogs	 : [ String ]
   }
