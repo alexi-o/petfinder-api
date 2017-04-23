@@ -30,21 +30,26 @@ $(document).ready(function() {
           }],
        }); 
     });
-        $('.hate-dog').on('click', function(e){
+        $('#dogStuff').on('click', '.hate-dog', function(e){
             e.preventDefault();
             console.log("Hate dog clicked!");
-            var dogId = $(this).attr('value');
-            console.log(dogId);
+            var dogId = $(this).val();
+            console.log($(this).parents('.dog'));
+            var dogHate = $(this).parents('.dog');
+            console.log(dogHate + " will be removed");
               for(var i = 0; i<pageDogs.length; i++){
-                console.log("Checking....");
-                console.log(pageDogs[i].id.$t);
-                if (pageDogs[i].id.$t === dogId){
-                  console.log("Hate match!");
+                console.log(pageDogs[i].id);
+                if (pageDogs[i]._id === dogId){
                   loveDogs.push(pageDogs[i]);
-                  $.ajax({
-                    method: 'POST',
-                    url: '/api/haters',
-                    data: pageDogs[i]
+                  $.ajax({ 
+                    method: 'DELETE',
+                    url: '/api/dogs/' + pageDogs[i]._id,
+                    success: [function(data){
+                    console.log(data + "DONE DATA");
+                    console.log("Removing " + dogHate);
+                    $(dogHate).remove();
+                    }
+                    ]
                   });
                 } 
               }
@@ -56,8 +61,8 @@ $(document).ready(function() {
             console.log(dogId);
               for(var i = 0; i<pageDogs.length; i++){
                 console.log("Checking....");
-                console.log(pageDogs[i].id.$t);
-                if (pageDogs[i].id.$t === dogId){
+                console.log(pageDogs[i].id);
+                if (pageDogs[i].id === dogId){
                   console.log("Love match!");
                   loveDogs.push(pageDogs[i]);
                   $.ajax({
@@ -74,7 +79,7 @@ $(document).ready(function() {
             var dogId = $(this).attr('value');
             console.log(dogId);
               for(var i = 0; i<pageDogs.length; i++){
-                if (pageDogs[i].id.$t === dogId){
+                if (pageDogs[i].id === dogId){
                   console.log("Match!");
                   console.log(pageDogs[i]);
                 }
@@ -89,25 +94,20 @@ $(document).ready(function() {
               console.log('Age = ' + age);
               $.ajax({
                 method: 'GET',
-                url: '/api/dogs/search/'+ age,
-                data: {
-                  age: age,
-                  UserID: UserID
-                },
-                success:[function(dogs){
-                console.log(dogs);
-                  dogs.forEach(function(dog){
-                    pageDogs.push(dog);
-                    console.log(pageDogs.length);
-                    renderDog(dog);
-            });
-          }],
-       }); 
-            } else if ($(this).val() === 'Small' || $(this).val() === 'Medium' || $(this).val() === 'Large' || $(this).val() === 'Extra Large') {
+                url: '/api/dogs/:age/'+ age,
+                  }).done(function(){
+                    $.get('/api/dogs/' + age);
+                  });
+            } else if ($(this).val() === 'S' || $(this).val() === 'M' || $(this).val() === 'L' || $(this).val() === 'XL') {
               console.log('Size');
-              var size = $(this).val()[0];
+              var size = $(this).val();
               console.log('Size = ' + size);
-
+              $.ajax({
+                method: 'GET',
+                url: '/api/dogs/:size/'+ size,
+                  }).done(function(){
+                    $.get('/api/dogs/' + size);
+                  });
           }
         });
   });
@@ -118,53 +118,49 @@ function unRender(dog) {
 }
 
 function renderDog(dog) {
-  console.log('rendering dog:', dog + " " + dog.id.$t);
+  console.log('rendering dog:', dog + " " + dog._id);
   var dogHtml =
   "        <!-- one dog -->" +
-  "        <div class='row dog' data-dog-id='" +dog.id.$t + "'>" +
+  "        <div class='row dog' data-dog-id='" +dog._id + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
   "              <!-- begin dog internal row -->" +
   "                <div class='column'>" +
   "                  <div class='col-md-3 col-xs-12 thumbnail dog-art'>" +
-  "                     <img src='" + dog.media.photos.photo[3].$t +  " alt='dog image'>" +
+  "                     <img src='" + dog.photos.photo2 +  " alt='dog image'>" +
   "                  </div>" +
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Dog Name:</h4>" +
-  "                        <span class='dog-name'>" + dog.name.$t + "</span>" +
+  "                        <span class='dog-name'>" + dog.name + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Age:</h4>" +
-  "                        <span class='dog-age'>" +  dog.age.$t + "</span>" +
+  "                        <span class='dog-age'>" +  dog.age + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Size:</h4>" +
-  "                        <span class='dog-size'>" + dog.size.$t + "</span>" +
-  "                      </li>" +
-  "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Breed:</h4>" +
-  "                        <span class='dog-description'>" + dog.breeds.breed.$t + "</span>" +
+  "                        <span class='dog-size'>" + dog.size + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Contact:</h4>" +
-  "                        <span class='dog-description'>" + "Phone: " + dog.contact.phone.$t + ", Email: " + dog.contact.email.$t + "</span>" +
+  "                        <span class='dog-description'>" + "Phone: " + dog.contact.phone + ", Email: " + dog.contact.email + "</span>" +
   "                      </li>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Location:</h4>" +
-  "                        <span class='dog-description'>" + dog.contact.address1.$t + ", " + dog.contact.city.$t + ", " + dog.contact.state.$t + ", " + dog.contact.zip.$t + "</span>" +
+  "                        <span class='dog-description'>" + dog.contact.address1 + ", " + dog.contact.city + ", " + dog.contact.state + ", " + dog.contact.zip + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
   "                <!-- end of dog internal row -->" +
   "                 <div class='panel-footer'>" +
-  "                   <button class='btn btn-primary map-dog' value='" + dog.id.$t + "'>Map Me!</button>" +
-  "                   <button class='btn btn-danger pull-right hate-dog' value='" + dog.id.$t + "'>Hate This Dog!</button>" +
-  "                   <button class='btn btn-success pull-right love-dog' value='" + dog.id.$t + "''>Love This Dog!</button>" +
+  "                   <button class='btn btn-primary map-dog' value='" + dog._id + "'>Map Me!</button>" +
+  "                   <button class='btn btn-danger pull-right hate-dog' value='" + dog._id + "'>Hate This Dog!</button>" +
+  "                   <button class='btn btn-success pull-right love-dog' value='" + dog._id + "''>Love This Dog!</button>" +
   "                     </div>" + 
   "                </div>" +
   "              </div>" +
