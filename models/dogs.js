@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-
+//How dogs will be stored in the DB
 var DogSchema = new Schema({
      name: String,
      age: String,

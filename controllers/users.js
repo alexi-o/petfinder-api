@@ -45,7 +45,7 @@ function getLogout(request, response, next) {
 function secret(request, response, next){
 	response.json("HELP");
 }
-
+//Pulls all of the dogs (200 count limit) in the DB
 function allDogs(req, res, next) {
 	db.Dog.find({}, function (err, data){
 		console.log(data);
@@ -66,7 +66,7 @@ function oneDog(req, res, next) {
 		res.send(dogs);
 	});
 }
-
+//Finds dog by ID and removes them on Hate This Dog click
 function deleteDog(req, res, next) {
 	db.Dog.findByIdAndRemove({_id: req.params.id}, function(err, dogs) {
 		if(err) res.json(err);

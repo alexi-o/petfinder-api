@@ -164,6 +164,10 @@ function renderDog(dog) {
   "                        <h4 class='inline-header'>Location:</h4>" +
   "                        <span class='dog-description'>" + dog.contact.address + ", " + dog.contact.city + ", " + dog.contact.state + ", " + dog.contact.zip + "</span>" +
   "                      </li>" +
+    "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'>Location:</h4>" +
+  "                        <span class='dog-description'>" + dog.description + "</span>" +
+  "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
