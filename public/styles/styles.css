@@ -10,9 +10,6 @@ li {
 #map  {
     width: 350px;
     height: 400px;
-    position: fixed;
-    display: block;
-    z-index: 10;
 }
 
 .sticky {
@@ -36,11 +33,6 @@ li {
 h2.no-login {
 	margin-left: 150px;
 	color: black;
-}
-
-.affix {
-    top: 100px;
-    position: fixed;
 }
 
 body {

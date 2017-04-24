@@ -28,7 +28,19 @@ $(document).ready(function() {
           console.log("Learn more clickedd!");
           var search = $('#search').val();
           $("#dogStuff").empty();
+          searchDogs = [];
           console.log(search);
+            for(var i = 0; i<pageDogs.length; i++){
+              console.log(pageDogs[i].contact.city);
+              if(search === pageDogs[i].zip || search === pageDogs[i].contact.city){
+                searchDogs.push(pageDogs[i]);
+                searchDogs.forEach(function(dog){
+                  renderDog(dog);
+                  codeAddress(dog.contact.zip, dog.name + ", " + dog.contact.phone + ", " + dog.contact.email);
+                });
+              }
+            }
+
        }); 
     });
         $('#dogStuff').on('click', '.hate-dog', function(e){
@@ -54,7 +66,7 @@ $(document).ready(function() {
                 } 
               }
     }); 
-        $('.love-dog').on('click', function(e){
+        $('#dogStuff').on('click', '.love-dog', function(e){
             e.preventDefault();
             console.log("Love dog clicked!");
             var dogId = $(this).attr('value');
@@ -83,19 +95,19 @@ $(document).ready(function() {
           });
     });
 
-        $('.map-dog').on('click', function(e){
-            e.preventDefault();
-            console.log("Map dog clicked!");
-            var dogId = $(this).attr('value');
-            console.log(dogId);
-              for(var i = 0; i<pageDogs.length; i++){
-                if (pageDogs[i]._id === dogId){
-                  console.log("Map dog matched!");
-                  console.log(pageDogs[i]);
-                  codeAddress(pageDogs[i].contact.zip, pageDogs[i].contact.phone + ", " + pageDogs[i].contact.zip);
-                }
-              }
-          });
+        // $('.map-dog').on('click', function(e){
+        //     e.preventDefault();
+        //     console.log("Map dog clicked!");
+        //     var dogId = $(this).attr('value');
+        //     console.log(dogId);
+        //       for(var i = 0; i<pageDogs.length; i++){
+        //         if (pageDogs[i]._id === dogId){
+        //           console.log("Map dog matched!");
+        //           console.log(pageDogs[i]);
+        //           codeAddress(pageDogs[i].contact.zip, pageDogs[i].contact.phone + ", " + pageDogs[i].contact.zip);
+        //         }
+        //       }
+        //   });
         $('#selector').change(function(e){
           e.preventDefault();
           $("#dogStuff").empty();
@@ -111,7 +123,6 @@ $(document).ready(function() {
                   renderDog(dog);
                 });
               } else {
-              
       }
     }
   });
