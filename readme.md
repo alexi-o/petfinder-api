@@ -20,4 +20,4 @@ I anticipate the app having the ability to store the dog data to each individual
 
 I also plan to have this deployed onto a Heroku server so that the app is public and useable.
 
-The map begins to stay with the user as they scroll down but quickly stops. 
+The map begins to stay with the user as they scroll down but quickly stops
