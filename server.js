@@ -1,6 +1,8 @@
 var express = require('express'),
     app = express();
 
+require('dotenv').config();
+
 var api = require('./env.js');
 var api2 = require('./env2.js');
 var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&location=colorado&output=basic&count=5&format=json";
