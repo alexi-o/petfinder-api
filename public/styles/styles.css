@@ -8,8 +8,8 @@ li {
 
 
 #map  {
-    width: 200px;
-    height: 200px;
+    width: 350px;
+    height: 400px;
     position: fixed;
     display: block;
     z-index: 10;

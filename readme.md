@@ -19,3 +19,5 @@ What I'd Still Like To Accomplish:
 I anticipate the app having the ability to store the dog data to each individuals profile and save that data so that when they log in, they can access their list of "Loved Dogs".
 
 I also plan to have this deployed onto a Heroku server so that the app is public and useable.
+
+The map begins to stay with the user as they scroll down but quickly stops. 

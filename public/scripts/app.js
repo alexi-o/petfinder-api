@@ -1,6 +1,7 @@
 var pageDogs = [];
 var loveDogs = [];
 var hateDogs = [];
+var searchDogs = [];
 
 $(document).ready(function() {
   console.log('app.js loaded!');
@@ -28,18 +29,6 @@ $(document).ready(function() {
           var search = $('#search').val();
           $("#dogStuff").empty();
           console.log(search);
-          $.ajax({
-            method: 'GET',
-            url: '/api/dogs/'+ search,
-            data: search,
-            success:[function(data){
-            console.log(data);
-              // dodatgs.forEach(function(dog){
-              //   pageDogs.push(dog);
-              //   console.log(pageDogs.length);
-              //   renderDog(dog);
-            // });
-          }],
        }); 
     });
         $('#dogStuff').on('click', '.hate-dog', function(e){
@@ -109,44 +98,24 @@ $(document).ready(function() {
           });
         $('#selector').change(function(e){
           e.preventDefault();
+          $("#dogStuff").empty();
+          searchDogs = [];
           console.log("CLICKED SELECTOR");
-            if($(this).val() === 'Baby' || $(this).val() === 'Young' || $(this).val() === 'Adult'){
-              console.log('Age');
-              var age = $(this).val();
-              console.log('Age = ' + age);
-              $.ajax({
-                method: 'GET',
-                url: '/:search',
-                data: age,
-                success: [function(data){
-                  data.forEach(function(dog){
-                  $("#dogStuff").empty();
+          console.log($(this).val());
+            for(var i = 0; i<pageDogs.length; i++){
+              console.log(pageDogs[i].name);
+              if($(this).val() === pageDogs[i].age || $(this).val() === pageDogs[i].size){
+                searchDogs.push(pageDogs[i]);
+                console.log(pageDogs[i]);
+                searchDogs.forEach(function(dog){
                   renderDog(dog);
-                  });
-                }]
-          });
-            } else if ($(this).val() === 'S' || $(this).val() === 'M' || $(this).val() === 'L' || $(this).val() === 'XL') {
-              console.log('Size');
-              var size = $(this).val();
-              console.log('Size = ' + size);
-              $.ajax({
-                method: 'GET',
-                url: '/api/dogs/searches/',
-                success: [function(data){
-                  data.forEach(function(dog){
-                  $("#dogStuff").empty();
-                  renderDog(dog);
-                  });
-                }]
-        });
+                });
+              } else {
+              
       }
-    });
+    }
   });
 });
-
-function unRender(dog) {
-
-}
 
 function renderDog(dog) {
   console.log('rendering dog:', dog + " " + dog._id);
