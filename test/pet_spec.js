@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 var request = require('request');
 
-const api = require('../env.js');
+var api = require('../env.js');
 
 var link = "http://api.petfinder.com/pet.getRandom?key=" +api + "&animal=dog&location=Denver+CO&output=basic&format=json";
 
