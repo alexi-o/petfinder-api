@@ -4,6 +4,7 @@ var hateDogs = [];
 
 $(document).ready(function() {
   console.log('app.js loaded!');
+  initialize();
   $.get('/api/dogs', function(dogs) {
         dogs.forEach(function(dog){
         pageDogs.push(dog);
@@ -79,16 +80,9 @@ $(document).ready(function() {
             console.log(dogId);
               for(var i = 0; i<pageDogs.length; i++){
                 if (pageDogs[i]._id === dogId){
-                  console.log("Match!");
+                  console.log("Map dog matched!");
                   console.log(pageDogs[i]);
-                  $.ajax({
-                    method: 'GET',
-                    url: '/api/dogs/' + pageDogs[i]._id,
-                    data: pageDogs[i]._id,
-                    success: [function(data){
-                      console.log(data);
-                    }]
-                  });
+                  codeAddress(JSON.stringify(pageDogs[i].contact.zip));
                 }
               }
           });
