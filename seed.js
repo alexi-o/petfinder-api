@@ -9,8 +9,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 var db  	   = require('./models');
+var api 	   = require('./env.js');
 
-var url = "http://api.petfinder.com/pet.find?key=925c6202c203f971efa10681383dd089&animal=dog&location=colorado&output=basic&count=200&format=json";
+var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&location=colorado&output=basic&count=200&format=json";
 
 var dogsList = [];
 
