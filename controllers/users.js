@@ -1,15 +1,5 @@
 var passport = require("passport")
-
-// var api = require('../env.js');
-// var api2 = require('../env2.js');
-
-// function getDogs(request, response) {
-// 		var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&location=colorado&output=basic&count=5&format=json";
-// 		request(url, function(error, response, dogs) {
-// 		var parsedDogs = JSON.parse(dogs);
-// 		res.send(parsedDogs.petfinder.pets.pet);
-// 	});
-// }
+var db = require('../models');
 
 // GET /signup
 function getSignup(request, response) {
@@ -56,8 +46,33 @@ function secret(request, response){
 	response.json("HELP");
 }
 
-module.exports = {
-  // getDogs: getDogs,	
+function allDogs(req, res) {
+	db.Dog.find({}, function (err, data){
+		console.log(data);
+		console.log(req.user + "Love Dogs");
+		res.send(data);
+	});
+}
+
+function oneDog(req, res) {
+	db.Dog.findByIdAndremove({_id: req.paramas.id}, function(err, dogs){
+		if(err) res.json(err);
+		console.log("Removed " + req.params.id);
+		res.send(dogs);
+	});
+}
+
+function deleteDog(req, res) {
+	db.Dog.findByIdAndRemove({_id: req.params.id}, function(err, dogs) {
+		if(err) res.json(err);
+		console.log("Removed " + req.params.id);
+		res.send(dogs);
+	});
+}
+
+module.exports = {	
+  allDogs: allDogs,
+  deleteDog: deleteDog,	
   getLogin: getLogin,
   postLogin: postLogin ,
   getSignup: getSignup,

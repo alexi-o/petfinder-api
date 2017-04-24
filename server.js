@@ -51,44 +51,38 @@ var db = require('./models');
  * ENDPOINTS *
  **********/
 
-
-app.get('/api/dogs', function allDogs(req, res){
-		db.Dog.find({}, function (err, data){
-			console.log(data);
-			console.log(req.user + "Love dogs");
-			res.send(data);
-	});
-});
-
-app.get('/api/dogs/:id', function(req,res) {
-		db.Dog.findByIdAndRemove({_id: req.params.id}, function(err, dogs){
-			if(err) res.json(err);
-			console.log("Removed " + req.params.id);
-			res.send(dogs);
-		});
-});
-
-app.delete('/api/dogs/:id', function(req,res) {
-		db.Dog.findByIdAndRemove({_id: req.params.id}, function(err, dogs){
-			if(err) res.json(err);
-			console.log("Removed " + req.params.id);
-			res.send(dogs);
-		});
-});
-
-app.get('api/dogs/:size/', function(req,res){
-	db.Dog.find({size: req.params.size}, function(err, data){
-		console.log(data.length);
-		// res.send(data);
-	});
-});
-
-app.get('api/dogs/:age/', function(req, res){
+app.get('api/dogs/searches/:age/', function dogAge(req, res){
+	var age = req.params.age;
+	console.log(age);
 	db.Dog.find({age: req.params.age}, function(err, data){
-		console.log(data.length);
+		res.send(data);
 		// res.send(data);
 	});
 });
+
+// app.get('api/dogs/searches/:size/', function(req,res){
+// 	db.Dog.find({size: req.params.size}, function(err, data){
+// 		console.log(data.length);
+// 		// res.send(data);
+// 	});
+// });
+
+
+// app.get('/api/dogs/:city', function(req, res){
+// 	console.log(req.params.city);
+// 	db.Dog.find({ age: req.params.city }, function(err, dogs){
+// 		if(err) res.json(err);
+// 		console.log(dogs + "testing dogs");
+// 		res.send(dogs);
+// 	});
+	// var city = req.paramas.city;
+	// console.log(city);
+	// db.Dog.find({city: req.params.city}, function(err, data){
+	// 		console.log(data);
+	// 		console.log(req.user + "Love dogs");
+	// 		res.send(data);
+	// });
+// });
 
 // app.get('/api/dogs/:search', function(req, res) {
 // 		console.log("This is the request: " + req.params.search);

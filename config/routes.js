@@ -34,4 +34,10 @@ router.route("/logout")
 router.route("/secret")
   .get(authenticatedUser, usersController.secret)
 
+router.route("/api/dogs")
+  .get(authenticatedUser, usersController.allDogs)
+
+router.route("/api/dogs/:id")
+  .delete(authenticatedUser, usersController.deleteDog)
+
 module.exports = router

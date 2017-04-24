@@ -10,7 +10,6 @@ $(document).ready(function() {
         console.log("Rendered: " + dog);
         renderDog(dog);
     });
-
         $('#button-search').on('click', function(e){
           e.preventDefault();
           console.log("Learn more clickedd!");
@@ -21,13 +20,13 @@ $(document).ready(function() {
             method: 'GET',
             url: '/api/dogs/'+ search,
             data: search,
-            success:[function(dogs){
-            console.log(dogs);
-              dogs.forEach(function(dog){
-                pageDogs.push(dog);
-                console.log(pageDogs.length);
-                renderDog(dog);
-            });
+            success:[function(data){
+            console.log(data);
+              // dodatgs.forEach(function(dog){
+              //   pageDogs.push(dog);
+              //   console.log(pageDogs.length);
+              //   renderDog(dog);
+            // });
           }],
        }); 
     });
@@ -102,22 +101,31 @@ $(document).ready(function() {
               console.log('Age = ' + age);
               $.ajax({
                 method: 'GET',
-                url: '/api/dogs/:age/'+ age,
-                  }).done(function(){
-                    $.get('/api/dogs/' + age);
+                url: '/api/dogs/searches/',
+                data: age,
+                success: [function(data){
+                  data.forEach(function(dog){
+                  $("#dogStuff").empty();
+                  renderDog(dog);
                   });
+                }]
+          });
             } else if ($(this).val() === 'S' || $(this).val() === 'M' || $(this).val() === 'L' || $(this).val() === 'XL') {
               console.log('Size');
               var size = $(this).val();
               console.log('Size = ' + size);
               $.ajax({
                 method: 'GET',
-                url: '/api/dogs/:size/'+ size,
-                  }).done(function(){
-                    $.get('/api/dogs/' + size);
+                url: '/api/dogs/searches/',
+                success: [function(data){
+                  data.forEach(function(dog){
+                  $("#dogStuff").empty();
+                  renderDog(dog);
                   });
-          }
+                }]
         });
+      }
+    });
   });
 });
 
