@@ -24,6 +24,7 @@
             <h2>Your First Step Towards Your Next Dog</h2>
             <% if (currentUser) {%>
             <li><a class="btn btn-primary" href="/logout role="button">Logout <%= currentUser.local.email %></a></li>
+            <li><a class="btn btn-primary" role="button" id="loved-dogs">Your Loved Dogs</a></li>
             <% } else { %>
             <li><a class="btn btn-primary" href="/login" role="button">Login</a></li>
             <li><a class="btn btn-primary" href="/signup" role="button">Signup</a></li>
@@ -63,11 +64,11 @@
          </div>
          </div>
          </div>
-         <div class="container">
-            <div id='dogStuff' class ="col-md-9" attr="dog._id">
+<!--          <div class="container"> -->
+            <div id='dogStuff' class ="col-lg-8" attr="dog._id">
             </div>
-            <div id="map" class ="col-md-3"></div>
+            <div id="map" class ="col-lg-4" data-spy="affix" data-offset-top="10"></div>
             <% } else { %>
             <% } %>
-         </div>
+<!--          </div> -->
       </section>

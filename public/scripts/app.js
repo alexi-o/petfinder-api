@@ -10,6 +10,7 @@ $(document).ready(function() {
         pageDogs.push(dog);
         console.log("Rendered: " + dog);
         renderDog(dog);
+        codeAddress(dog.contact.zip, dog.name + ", " + dog.contact.phone + ", " + dog.contact.email);
     });
         $('#button-search').on('click', function(e){
           e.preventDefault();
@@ -58,21 +59,26 @@ $(document).ready(function() {
             e.preventDefault();
             console.log("Love dog clicked!");
             var dogId = $(this).attr('value');
+            var dogLove = $(this).parents('.dog');
             console.log(dogId);
               for(var i = 0; i<pageDogs.length; i++){
-                console.log("Checking....");
-                console.log(pageDogs[i].id);
-                if (pageDogs[i].id === dogId){
+                console.log(pageDogs[i]._id);
+                if (pageDogs[i]._id === dogId){
                   console.log("Love match!");
                   loveDogs.push(pageDogs[i]);
-                  $.ajax({
-                    method: 'POST',
-                    url: '/api/lovers',
-                    data: pageDogs[i]
-                  });
+                  $(dogLove).remove();
                 } 
               }
-    });    
+    });
+        $('#loved-dogs').on('click', function(e){
+          e.preventDefault();
+          console.log("Love dogs!");
+          $("#dogStuff").empty();
+          loveDogs.forEach(function(dog){
+            renderDog(dog);
+          });
+    });
+
         $('.map-dog').on('click', function(e){
             e.preventDefault();
             console.log("Map dog clicked!");
@@ -82,7 +88,7 @@ $(document).ready(function() {
                 if (pageDogs[i]._id === dogId){
                   console.log("Map dog matched!");
                   console.log(pageDogs[i]);
-                  codeAddress(JSON.stringify(pageDogs[i].contact.zip));
+                  codeAddress(pageDogs[i].contact.zip, pageDogs[i].contact.phone + ", " + pageDogs[i].contact.zip);
                 }
               }
           });
@@ -132,15 +138,15 @@ function renderDog(dog) {
   var dogHtml =
   "        <!-- one dog -->" +
   "        <div class='row dog' data-dog-id='" +dog._id + "'>" +
-  "          <div class='col-md-10 col-md-offset-1'>" +
+  "          <div class='col-lg-10'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
   "              <!-- begin dog internal row -->" +
   "                <div class='column'>" +
-  "                  <div class='col-md-3 col-xs-12 thumbnail dog-art'>" +
+  "                  <div class='col-md-4 col-xs-12 thumbnail dog-art'>" +
   "                     <img src='" + dog.photos.photo2 +  " alt='dog image'>" +
   "                  </div>" +
-  "                  <div class='col-md-9 col-xs-12'>" +
+  "                  <div class='col-md-8 col-xs-12'>" +
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Dog Name:</h4>" +
@@ -168,7 +174,6 @@ function renderDog(dog) {
   "                </div>" +
   "                <!-- end of dog internal row -->" +
   "                 <div class='panel-footer'>" +
-  "                   <button class='btn btn-primary map-dog' value='" + dog._id + "'>Map Me!</button>" +
   "                   <button class='btn btn-danger pull-right hate-dog' value='" + dog._id + "'>Hate This Dog!</button>" +
   "                   <button class='btn btn-success pull-right love-dog' value='" + dog._id + "''>Love This Dog!</button>" +
   "                     </div>" + 

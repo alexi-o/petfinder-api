@@ -9,28 +9,29 @@
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(39.7069310, -104.9564080);
     var mapOptions = {
-      zoom: 8,
+      zoom: 9,
       center: latlng
     }
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
   }
 
-  function codeAddress(address) {
+  function codeAddress(address, content) {
+    console.log(content + " map results");
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == 'OK') {
-        console.log("New pin added!");
         map.setCenter(results[0].geometry.location);
         var marker = new google.maps.Marker({
             map: map,
-            position: results[0].geometry.location
+            position: results[0].geometry.location,
+            clickable: true,
+            optimized: true,
+            title: content
         });
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
   }
-
-
     </script>
   </body>
 </html>

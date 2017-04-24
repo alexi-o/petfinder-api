@@ -8,8 +8,8 @@ li {
 
 
 #map {
-	height: 200px;
-	width: 200px;
+	height: 300px;
+	width: 300px;
 }
 
 .sticky {
@@ -33,4 +33,14 @@ li {
 h2.no-login {
 	margin-left: 150px;
 	color: black;
+}
+
+.affix {
+    top: 100px;
+    position: fixed;
+}
+
+body {
+    height:2000px;
+    overflow: scroll;
 }
