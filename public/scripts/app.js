@@ -12,6 +12,16 @@ $(document).ready(function() {
         renderDog(dog);
         codeAddress(dog.contact.zip, dog.name + ", " + dog.contact.phone + ", " + dog.contact.email);
     });
+        $('#all-dogs').on('click', function(e){
+          e.preventDefault();
+          console.log("Back to all the dogs!");
+          $("#dogStuff").empty();
+          pageDogs.forEach(function(dog){
+            console.log("Back to all the dogs!");
+            renderDog(dog);
+            codeAddress(dog.contact.zip, dog.name + ", " + dog.contact.phone + ", " + dog.contact.email);
+          });
+        });
         $('#button-search').on('click', function(e){
           e.preventDefault();
           console.log("Learn more clickedd!");
@@ -67,6 +77,10 @@ $(document).ready(function() {
                   console.log("Love match!");
                   loveDogs.push(pageDogs[i]);
                   $(dogLove).remove();
+                  // $.ajax({
+                  //   method: 'POST',
+                  //   url: 
+                  // })
                 } 
               }
     });
@@ -76,6 +90,7 @@ $(document).ready(function() {
           $("#dogStuff").empty();
           loveDogs.forEach(function(dog){
             renderDog(dog);
+            codeAddress(dog.contact.zip, dog.name + ", " + dog.contact.phone + ", " + dog.contact.email);
           });
     });
 
@@ -101,7 +116,7 @@ $(document).ready(function() {
               console.log('Age = ' + age);
               $.ajax({
                 method: 'GET',
-                url: '/api/dogs/searches/',
+                url: '/:search',
                 data: age,
                 success: [function(data){
                   data.forEach(function(dog){

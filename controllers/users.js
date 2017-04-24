@@ -36,25 +36,30 @@ function postLogin(request, response, next) {
 }
 
 // GET /logout
-function getLogout(request, response) {
+function getLogout(request, response, next) {
 	request.logout();
 	response.redirect('/');
 }
 
 // Restricted page
-function secret(request, response){
+function secret(request, response, next){
 	response.json("HELP");
 }
 
-function allDogs(req, res) {
+function allDogs(req, res, next) {
 	db.Dog.find({}, function (err, data){
 		console.log(data);
 		console.log(req.user + "Love Dogs");
 		res.send(data);
+		var userId = req.user._id;
+		db.User.find({_id: userId}, function(err, user){
+			console.log(user + "   DOGS");
+			console.log(user.allDogs);
+		});
 	});
 }
 
-function oneDog(req, res) {
+function oneDog(req, res, next) {
 	db.Dog.findByIdAndremove({_id: req.paramas.id}, function(err, dogs){
 		if(err) res.json(err);
 		console.log("Removed " + req.params.id);
@@ -62,13 +67,22 @@ function oneDog(req, res) {
 	});
 }
 
-function deleteDog(req, res) {
+function deleteDog(req, res, next) {
 	db.Dog.findByIdAndRemove({_id: req.params.id}, function(err, dogs) {
 		if(err) res.json(err);
 		console.log("Removed " + req.params.id);
 		res.send(dogs);
 	});
 }
+
+function searchDog(req,res, next) {
+	console.log(req.params);
+	db.Dog.find({age: req.params.age }, function(err, dogs) {
+		if(err) res.json(err);
+		console.log("Searching for dogs: " + req.params.city);
+	});
+}
+
 
 module.exports = {	
   allDogs: allDogs,
@@ -78,5 +92,6 @@ module.exports = {
   getSignup: getSignup,
   postSignup: postSignup,
   getLogout: getLogout,
-  secret: secret
+  secret: secret,
+  searchDog: searchDog
 };

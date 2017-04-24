@@ -40,4 +40,7 @@ router.route("/api/dogs")
 router.route("/api/dogs/:id")
   .delete(authenticatedUser, usersController.deleteDog)
 
-module.exports = router
+router.route("/search")
+  .get(usersController.searchDog)
+
+module.exports = router;

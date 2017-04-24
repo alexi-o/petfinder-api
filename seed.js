@@ -57,5 +57,4 @@ request(url, function(error, response, body){
 			console.log("created", dogList.length, "dogs");
 			process.exit();
 		});
-
 });
