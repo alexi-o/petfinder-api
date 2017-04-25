@@ -1,36 +1,36 @@
-var pageDogs = [];
-var loveDogs = [];
-var hateDogs = [];
-var searchDogs = [];
+var pageDogs = []; //Empty array that will be filled with all dogs that load to the page
+var loveDogs = []; //Empty array that will be filled as the user clicks Love This Dog
+var hateDogs = []; //Empty array that will be filled as the user clicks Hate This Dog
+var searchDogs = []; //Empty array that will be filled with dogs that match search criteria then will be rendered to the page
 
 $(document).ready(function() {
   console.log('app.js loaded!');
-  initialize();
-  $.get('/api/dogs', function(dogs) {
-        dogs.forEach(function(dog){
-        pageDogs.push(dog);
+  initialize(); //creates the Google Map
+  $.get('/api/dogs', function(dogs) { //Get route to grab dogs for the database
+        dogs.forEach(function(dog){ //Loop to go through the dogs received through get route from DB
+        pageDogs.push(dog); //Pushes each dog received from GET route into the empty array
         console.log("Rendered: " + dog);
-        renderDog(dog);
+        renderDog(dog); //Runs the renderDog function on each dog that comes through and appends them to the HTML
         codeAddress(dog.contact.zip, dog.name + ", " + dog.contact.phone + ", " + dog.contact.email);
-    });
-        $('#all-dogs').on('click', function(e){
+    }); //Creates a marker on the Google Map with some info about each dog which displays when hovered
+        $('#all-dogs').on('click', function(e){ //this button returns the user to all of the dogs (if they clicked over to the loved dogs list)
           e.preventDefault();
           console.log("Back to all the dogs!");
-          $("#dogStuff").empty();
-          pageDogs.forEach(function(dog){
+          $("#dogStuff").empty(); //removes all the dog divs from the page
+          pageDogs.forEach(function(dog){ //cycles through the pageDogs array
             console.log("Back to all the dogs!");
-            renderDog(dog);
+            renderDog(dog); //renders all of the dogs back to the page
             codeAddress(dog.contact.zip, dog.name + ", " + dog.contact.phone + ", " + dog.contact.email);
           });
         });
-        $('#button-search').on('click', function(e){
+        $('#button-search').on('click', function(e){ //drop-down search
           e.preventDefault();
           console.log("Learn more clickedd!");
-          var search = $('#search').val();
-          $("#dogStuff").empty();
-          searchDogs = [];
+          var search = $('#search').val(); //stores the value the user inputs into the dropdown search
+          $("#dogStuff").empty(); //removes all dog divs from the page
+          searchDogs = []; //redefines the searchDogs array to be empty so it can receive new searches
           console.log(search);
-            for(var i = 0; i<pageDogs.length; i++){
+            for(var i = 0; i<pageDogs.length; i++){ //loops through the pageDogs to try and find matches to the search criteria of the dropdown
               console.log(pageDogs[i].contact.city);
               if(search === pageDogs[i].zip || search === pageDogs[i].contact.city){
                 searchDogs.push(pageDogs[i]);
@@ -43,32 +43,32 @@ $(document).ready(function() {
 
        }); 
     });
-        $('#dogStuff').on('click', '.hate-dog', function(e){
+        $('#dogStuff').on('click', '.hate-dog', function(e){ //function to remove dogs that are 'hated' from the page
             e.preventDefault();
             console.log("Hate dog clicked!");
             var dogId = $(this).val();
             console.log($(this).parents('.dog'));
-            var dogHate = $(this).parents('.dog');
+            var dogHate = $(this).parents('.dog'); //stores the parent div of hated dog
             console.log(dogHate + " will be removed");
               for(var i = 0; i<pageDogs.length; i++){
                 console.log(pageDogs[i].id);
                 if (pageDogs[i]._id === dogId){
                   loveDogs.push(pageDogs[i]);
-                  $.ajax({ 
+                  $.ajax({ //ajax request to DELETE the 'hated' dog from the DB
                     method: 'DELETE',
                     url: '/api/dogs/' + pageDogs[i]._id,
                     success: [function(data){
                     console.log(data + "DONE DATA");
                     console.log("Removing " + dogHate);
-                    $(dogHate).remove();
+                    $(dogHate).remove(); //removes the entire hated dog div from the page
                     }]
                   });
                 } 
               }
     }); 
-        $('#dogStuff').on('click', '.love-dog', function(e){
-            e.preventDefault();
-            console.log("Love dog clicked!");
+        $('#dogStuff').on('click', '.love-dog', function(e){ //function to remove dogs that are 'loved' from the page
+            e.preventDefault();                              //and pushed them into the loveDogs array so that if the user
+            console.log("Love dog clicked!");                //clicks on Loved Dogs they will see all they 'loved'
             var dogId = $(this).attr('value');
             var dogLove = $(this).parents('.dog');
             console.log(dogId);
@@ -85,10 +85,10 @@ $(document).ready(function() {
                 } 
               }
     });
-        $('#loved-dogs').on('click', function(e){
+        $('#loved-dogs').on('click', function(e){ //Displays all of the dogs on the page that the user has 'loved'
           e.preventDefault();
           console.log("Love dogs!");
-          $("#dogStuff").empty();
+          $("#dogStuff").empty(); //removes all currently displayed dog divs from the page
           loveDogs.forEach(function(dog){
             renderDog(dog);
             codeAddress(dog.contact.zip, dog.name + ", " + dog.contact.phone + ", " + dog.contact.email);
