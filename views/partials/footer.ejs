@@ -27,6 +27,10 @@
             optimized: true,
             title: content
         });
+        } else if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) { 
+        wait = true;
+        setTimeout("wait = true", 2000);
+        //alert("OQL: " + status);
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
