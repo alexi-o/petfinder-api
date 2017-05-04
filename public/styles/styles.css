@@ -1,40 +1,36 @@
+/*Remove the bullets from listed items*/
 li {
 	list-style: none;
 }
-
+/*This adds a dog image to the header*/
 .jumbotron{
 	background: url(./images/header.jpg) no-repeat;
 }
 
-
+/*This is the Google Maps map*/
 #map  {
     width: 350px;
     height: 400px;
 }
-
+/*This should make the map stay on the page on scroll*/
 .sticky {
      position: fixed;
      top: 0;
   }
-
+/*Search dropdown for sizes and age*/
 .selectpicker {
 	height: 34px;
 	width: 100px;
 }
-
+/*Font in the header / bootstrap jumbotron*/
 .jumbotron h1, h2 {
 	color: white;
 }
-
+/*Makes the logout/login items in the header display in a horizontal line*/
 li {
 	display: inline;
 }
-
-h2.no-login {
-	margin-left: 150px;
-	color: black;
-}
-
+/*Where the dog results are displayed*/
 body {
     height:2000px;
     overflow: scroll;
