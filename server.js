@@ -7,7 +7,6 @@ var api = require('./env.js');
 var api2 = require('./env2.js');
 var url = "http://api.petfinder.com/pet.find?key=" + api + "&animal=dog&location=colorado&output=basic&count=5&format=json";
 
-
 var bodyParser   	 = require('body-parser');
 var request		 	 = require('request');
 var mongoose     	 = require('mongoose');
@@ -58,7 +57,6 @@ app.get('api/dogs/searches/:age/', function dogAge(req, res){
 	console.log(age);
 	db.Dog.find({age: req.params.age}, function(err, data){
 		res.send(data);
-		// res.send(data);
 	});
 });
 

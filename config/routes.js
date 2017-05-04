@@ -7,6 +7,7 @@ var methodOverride = require('method-override');
 var passport = require("passport");
 var usersController = require('../controllers/users');
 var staticsController = require('../controllers/statics');
+var dogsController = require('../controllers/dogs');
 var request      = require('request');
 
 function authenticatedUser(req, res, next) {
@@ -35,12 +36,12 @@ router.route("/secret")
   .get(authenticatedUser, usersController.secret)
 
 router.route("/api/dogs")
-  .get(authenticatedUser, usersController.allDogs)
+  .get(authenticatedUser, dogsController.allDogs)
 
 router.route("/api/dogs/:id")
-  .delete(authenticatedUser, usersController.deleteDog)
+  .delete(authenticatedUser, dogsController.deleteDog)
 
 router.route("/search")
-  .get(usersController.searchDog)
+  .get(dogsController.searchDog)
 
 module.exports = router;
