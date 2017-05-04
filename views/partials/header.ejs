@@ -23,7 +23,7 @@
             <h1>Welcome to Colo-Doggo!</h1>
             <h2>Your First Step Towards Your Next Dog</h2>
             <% if (currentUser) {%>
-            <li><a class="btn btn-primary" href="/logout role="button">Logout <%= currentUser.local.email %></a></li>
+            <li><a class="btn btn-primary" href="/logout">Logout <%= currentUser.local.email %></a></li>
             <li><a class="btn btn-primary btn-success" role="button" id="loved-dogs">Your Loved Dogs</a></li>
             <li><a class="btn btn-primary btn-warning" role="button" id="all-dogs">View All Dogs</a></li>
             <% } else { %>
