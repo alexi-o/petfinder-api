@@ -37,7 +37,34 @@ function searchDog(req,res, next) {
 	});
 }
 
+function addDog(req, res, next) {
+	console.log("adding dog!");
+	var newDog = new db.Dog({
+		name: req.body.dogName,
+		age: req.body.dogAge,
+		size: req.body.dogSize,
+		description: req.body.dogDesc,
+		photos: {
+     		photo1: req.body.photo
+     	},
+		contact: {
+			phone: req.body.phone,
+			address: req.body.address,
+			email: req.body.email,
+			city: req.body.city,
+			state: req.body.state,
+			zip: req.body.zip
+		}
+	});
+	newDog.save(function(err, dogs) {
+		if(err){
+			console.log(err);
+		} 
+	});
+}
+
 module.exports = {
+	addDog: addDog,
 	allDogs: allDogs,
 	oneDog: oneDog,
 	deleteDog:deleteDog,

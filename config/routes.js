@@ -36,12 +36,15 @@ router.route("/secret")
   .get(authenticatedUser, usersController.secret)
 
 router.route("/api/dogs")
-  .get(authenticatedUser, dogsController.allDogs)
+  .get(dogsController.allDogs)
 
 router.route("/api/dogs/:id")
   .delete(authenticatedUser, dogsController.deleteDog)
 
 router.route("/search")
   .get(dogsController.searchDog)
+
+router.route("/api/dogs")
+  .post(dogsController.addDog)
 
 module.exports = router;

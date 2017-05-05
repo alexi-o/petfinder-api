@@ -84,7 +84,7 @@ $(document).ready(function() {
                   // })
                 } 
               }
-    });
+    }); //When a user clicks Love This Dog! it will be pushed into an array so they can view all the loved dogs
         $('#loved-dogs').on('click', function(e){ //Displays all of the dogs on the page that the user has 'loved'
           e.preventDefault();
           console.log("Love dogs!");
@@ -93,27 +93,51 @@ $(document).ready(function() {
             renderDog(dog);
             codeAddress(dog.contact.zip, dog.name + ", " + dog.contact.phone + ", " + dog.contact.email);
           });
-    });
-
-        // $('.map-dog').on('click', function(e){
-        //     e.preventDefault();
-        //     console.log("Map dog clicked!");
-        //     var dogId = $(this).attr('value');
-        //     console.log(dogId);
-        //       for(var i = 0; i<pageDogs.length; i++){
-        //         if (pageDogs[i]._id === dogId){
-        //           console.log("Map dog matched!");
-        //           console.log(pageDogs[i]);
-        //           codeAddress(pageDogs[i].contact.zip, pageDogs[i].contact.phone + ", " + pageDogs[i].contact.zip);
-        //         }
-        //       }
-        //   });
+    }); //this will add a new dog one day
+        $('#formDog').on('submit', function(e){
+          e.preventDefault();
+            console.log("add dog!");
+            var dogName = $('#name').val();
+            var dogAge = $('#age').val();
+            var dogSize = $('#size').val();
+            var dogDesc = $('#description').val();
+            var dogPhoto = $('#photoUrl').val();
+            var dogPhone = $('#phone').val();
+            var dogAddress = $('#address').val();
+            var dogEmail = $('#email').val();
+            var dogCity = $('#city').val();
+            var dogState = $('#state').val();
+            var dogZip = $('#zip').val();
+      }).then(function(dogCreate){
+          console.log("creating dog");
+          var newDog = {
+            name: dogName,
+            age: dogAge,
+            size: dogSize,
+            description: dogDesc,
+            photos: {
+              photo1: dogPhoto
+             },
+            contact: {
+            phone: dogPhone,
+            address: dogAddress,
+            email: dogEmail,
+            city: dogCity,
+            state: dogState,
+            zip: dogZip
+            }
+          };
+          $.ajax({
+            url: '/api/dogs',
+            type: 'POST',
+            data: newDog,
+            success: console.log('New dog added' + newDog)
+          });
+      }); //This is the search function that filters dogs according to the dropdown selected
         $('#selector').change(function(e){
           e.preventDefault();
           $("#dogStuff").empty();
           searchDogs = [];
-          console.log("CLICKED SELECTOR");
-          console.log($(this).val());
             for(var i = 0; i<pageDogs.length; i++){
               console.log(pageDogs[i].name);
               if($(this).val() === pageDogs[i].age || $(this).val() === pageDogs[i].size){
@@ -127,7 +151,7 @@ $(document).ready(function() {
     }
   });
 });
-
+// creates a new dog div and prepends it to the dog section of the page
 function renderDog(dog) {
   console.log('rendering dog:', dog + " " + dog._id);
   var dogHtml =
@@ -165,7 +189,7 @@ function renderDog(dog) {
   "                        <span class='dog-description'>" + dog.contact.city + ", " + dog.contact.state + ", " + dog.contact.zip + "</span>" +
   "                      </li>" +
     "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Location:</h4>" +
+  "                        <h4 class='inline-header'>Description:</h4>" +
   "                        <span class='dog-description'>" + dog.description + "</span>" +
   "                      </li>" +
   "                    </ul>" +
@@ -181,7 +205,7 @@ function renderDog(dog) {
   "            </div>" +
   "          </div>" +
   "          <!-- end one dog -->";
-
+// Adds the dogs by stacking them on top, new dogs will be added at the top of the page
 $("#dogStuff").prepend(dogHtml);
 
 }
